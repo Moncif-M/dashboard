@@ -220,11 +220,11 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
         </div>
       </div>
 
-      {/* Discipline Scores, Avg Score Closed, and Table Row - 4 Columns */}
+      {/* Discipline Scores and Avg Score Closed Row - 3/4 and 1/4 split */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-        {/* Discipline Scores - 1/4 */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 h-[180px] flex flex-col">
-          <h3 className="text-xs font-semibold text-foreground mb-2 flex-shrink-0">
+        {/* Discipline Scores - 3/4 */}
+        <div className="lg:col-span-3 bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col">
+          <h3 className="text-sm font-semibold text-foreground mb-3 flex-shrink-0">
             Scores by Discipline
             {selectedVendor && <span className="text-primary ml-2">({selectedVendor.name})</span>}
           </h3>
@@ -232,8 +232,8 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={disciplineBarData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 9 }} stroke="#9ca3af" />
-                <YAxis type="category" dataKey="discipline" tick={{ fontSize: 8 }} stroke="#9ca3af" width={70} />
+                <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11 }} stroke="#9ca3af" />
+                <YAxis type="category" dataKey="discipline" tick={{ fontSize: 11 }} stroke="#9ca3af" width={90} />
                 <Tooltip
                   formatter={(value: number) => [`${value}%`, "Score"]}
                   labelFormatter={(label) => `${label}`}
@@ -253,34 +253,22 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
         </div>
 
         {/* Avg Score Closed - 1/4 */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 h-[180px] flex flex-col justify-center">
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col justify-center">
           <div className="text-center">
-            <div className="flex justify-center mb-2">
-              <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                <Star className="w-6 h-6 text-green-500" />
+            <div className="flex justify-center mb-3">
+              <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
+                <Star className="w-8 h-8 text-green-500" />
               </div>
             </div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
               Avg Score Closed
             </p>
-            <p className="text-2xl font-bold text-foreground mb-1">
+            <p className="text-4xl font-bold text-foreground mb-2">
               {displayKPIs.avgScoreClosed}
             </p>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {selectedVendor ? selectedVendor.name : 'All Vendors'}
             </p>
-          </div>
-        </div>
-
-        {/* Vendor Table - 2/4 */}
-        <div className="lg:col-span-2 bg-card rounded-xl shadow-sm border border-border/50 overflow-hidden h-[180px] flex flex-col">
-          <div className="flex-1 overflow-auto">
-            <VendorTable
-              vendors={filteredVendors}
-              type="post-award"
-              selectedVendorId={selectedVendor?.id}
-              onSelectVendor={setSelectedVendor}
-            />
           </div>
         </div>
       </div>

@@ -221,14 +221,14 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
           />
         </div>
 
-        {/* Charts and Table Row - Custom 4-column grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-          {/* Trend Chart with dual Y-axis - 1/4 */}
-          <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex flex-col justify-center">
+        {/* Charts Row - 50/50 split */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {/* Trend Chart with dual Y-axis - 1/2 */}
+          <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex flex-col justify-center h-[300px]">
             <h3 className="text-xs font-semibold text-foreground mb-3">
               {selectedVendor ? `CA & Dependance JESA - ${selectedVendor.name}` : "Avg CA & Dependance JESA"}
             </h3>
-            <ResponsiveContainer width="100%" height={160}>
+            <ResponsiveContainer width="100%" height="100%">
               <LineChart data={caTimeData} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis dataKey="year" tick={{ fontSize: 11 }} stroke="#9ca3af" />
@@ -246,14 +246,14 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
                   width={30}
                 />
                 <Tooltip />
-                <Legend wrapperStyle={{ fontSize: '9px', paddingTop: '4px' }} iconSize={8} />
+                <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }} iconSize={10} />
                 <Line
                   yAxisId="left"
                   type="monotone"
                   dataKey="ca"
                   stroke="#3b82f6"
                   strokeWidth={2}
-                  dot={{ fill: "#3b82f6", r: 3 }}
+                  dot={{ fill: "#3b82f6", r: 4 }}
                   name="CA (M€)"
                 />
                 <Line
@@ -262,54 +262,42 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
                   dataKey="dependance"
                   stroke="#f59e0b"
                   strokeWidth={2}
-                  dot={{ fill: "#f59e0b", r: 3 }}
+                  dot={{ fill: "#f59e0b", r: 4 }}
                   name="Dep. JESA (%)"
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Production vs Capacity Chart - 1/4 */}
-          <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex flex-col justify-center">
+          {/* Production vs Capacity Chart - 1/2 */}
+          <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex flex-col justify-center h-[300px]">
             <h3 className="text-xs font-semibold text-foreground mb-3">
               {selectedVendor ? `Production vs Open Capacity (K units) - ${selectedVendor.name}` : "Production vs Open Capacity (K units)"}
             </h3>
-            <ResponsiveContainer width="100%" height={160}>
-              <BarChart data={capacityData} barGap={2} barCategoryGap="15%">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={capacityData} barGap={4} barCategoryGap="20%">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
-                <XAxis dataKey="name" tick={{ fontSize: 10 }} stroke="#9ca3af" axisLine={{ stroke: '#e5e7eb' }} />
+                <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#9ca3af" axisLine={{ stroke: '#e5e7eb' }} />
                 <YAxis tick={{ fontSize: 11 }} stroke="#9ca3af" axisLine={{ stroke: '#e5e7eb' }} />
                 <Tooltip
                   formatter={(value: number) => [`${value.toFixed(1)}K units`, '']}
                   contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb' }}
                 />
-                <Legend wrapperStyle={{ paddingTop: '8px', fontSize: '11px' }} />
+                <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '12px' }} />
                 <Bar dataKey="Production" fill="#3b82f6" name="Production" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="Open Capacity" fill="#10b981" name="Open Capacity" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
-          </div>
-
-          {/* Vendor Table - 2/4 */}
-          <div className="lg:col-span-2 bg-card rounded-xl shadow-sm border border-border/50 overflow-hidden h-[240px] flex flex-col">
-            <div className="flex-1 overflow-auto">
-              <VendorTable
-                vendors={filteredVendors}
-                type="pre-award"
-                selectedVendorId={selectedVendor?.id}
-                onSelectVendor={setSelectedVendor}
-              />
-            </div>
           </div>
         </div>
       </div>
     )
   }
 
-  // Performance View (Pre-Award 2) - Optimized layout without vendor comparison graph
+  // Performance View (Pre-Award 2) - Optimized layout with split KPIs
   return (
     <div className="space-y-3">
-      {/* KPI Cards - Main Performance Metrics */}
+      {/* KPI Cards - Top Half - Main Performance Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
         <KPICard
           title={selectedVendor ? "Response Rate" : "Avg Response Rate"}
@@ -343,8 +331,8 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
         />
       </div>
 
-      {/* Second Row KPIs - Projects & Packages */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      {/* KPI Cards - Bottom Half - Projects & Packages */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <KPICard
           title="Projects Ongoing"
           value={displayKPIs.totalProjectsOngoing}
@@ -363,18 +351,6 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
           icon={<Building2 className="w-5 h-5" />}
           variant="blue"
         />
-      </div>
-
-      {/* Vendor Table */}
-      <div className="bg-card rounded-xl shadow-sm border border-border/50 overflow-hidden h-[240px] flex flex-col">
-        <div className="flex-1 overflow-auto">
-          <VendorTable
-            vendors={filteredVendors}
-            type="pre-award"
-            selectedVendorId={selectedVendor?.id}
-            onSelectVendor={setSelectedVendor}
-          />
-        </div>
       </div>
     </div>
   )

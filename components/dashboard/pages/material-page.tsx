@@ -123,68 +123,68 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
 
   // Overview View
   return (
-    <div className="space-y-2">
-      {/* OTIF Gauge and Main KPIs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 flex items-center justify-center">
+    <div className="space-y-3">
+      {/* Top Half - OTIF Gauge and Main KPIs */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex items-center justify-center">
           <GaugeChart
             value={displayKPIs.avgOtifScore}
             title={selectedVendor ? `OTIF Score - ${selectedVendor.name.split(" ")[0]}` : "OTIF Score"}
-            size="sm"
+            size="md"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <KPICard
             title="Compliance %"
             value={`${displayKPIs.avgCompliancePercent}%`}
-            icon={<CheckCircle className="w-4 h-4" />}
+            icon={<CheckCircle className="w-5 h-5" />}
             variant="green"
           />
           <KPICard
             title="Quality Score"
             value={`${displayKPIs.avgQualityScore}%`}
-            icon={<Star className="w-4 h-4" />}
+            icon={<Star className="w-5 h-5" />}
             variant="blue"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <KPICard
             title="NCR Process Flow"
             value={`${displayKPIs.avgNcrProcessFlow}%`}
-            icon={<AlertTriangle className="w-4 h-4" />}
+            icon={<AlertTriangle className="w-5 h-5" />}
             variant="yellow"
           />
           <KPICard
             title={selectedVendor ? "Planned Units" : "Total Planned Units"}
             value={displayKPIs.totalPlanned.toLocaleString()}
-            icon={<Package className="w-4 h-4" />}
+            icon={<Package className="w-5 h-5" />}
             variant="default"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <KPICard
             title={selectedVendor ? "Actual Units" : "Total Actual Units"}
             value={displayKPIs.totalActual.toLocaleString()}
-            icon={<Package className="w-4 h-4" />}
+            icon={<Package className="w-5 h-5" />}
             variant={deliveryVariance >= -5 ? "green" : "red"}
           />
           <KPICard
             title="Delivery Variance"
             value={`${deliveryVariance}%`}
-            icon={deliveryVariance >= 0 ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />}
+            icon={deliveryVariance >= 0 ? <ArrowUp className="w-5 h-5" /> : <ArrowDown className="w-5 h-5" />}
             variant={deliveryVariance >= -5 ? "green" : "red"}
           />
         </div>
       </div>
 
-      {/* Charts and OSD Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+      {/* Bottom Half - Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Planned vs Actual Bar Chart */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 h-[180px] flex flex-col">
-          <h3 className="text-xs font-semibold text-foreground mb-2 flex-shrink-0">
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col">
+          <h3 className="text-sm font-semibold text-foreground mb-3 flex-shrink-0">
             {selectedVendor
               ? `Planned vs Actual - ${selectedVendor.name.split(" ")[0]}`
               : "Planned vs Actual by Vendor"}
@@ -193,10 +193,10 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={plannedVsActualData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis dataKey="name" tick={{ fontSize: 9 }} stroke="#9ca3af" />
-                <YAxis tick={{ fontSize: 9 }} stroke="#9ca3af" />
+                <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#9ca3af" />
+                <YAxis tick={{ fontSize: 11 }} stroke="#9ca3af" />
                 <Tooltip />
-                <Legend wrapperStyle={{ fontSize: '10px' }} />
+                <Legend wrapperStyle={{ fontSize: '11px' }} />
                 <Bar dataKey="planned" fill="#3b82f6" name="Planned" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="actual" fill="#10b981" name="Actual" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -205,8 +205,8 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
         </div>
 
         {/* Conformity Pie Chart */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 h-[180px] flex flex-col">
-          <h3 className="text-xs font-semibold text-foreground mb-2 flex-shrink-0">
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col">
+          <h3 className="text-sm font-semibold text-foreground mb-3 flex-shrink-0">
             {selectedVendor ? `Conformity - ${selectedVendor.name.split(" ")[0]}` : "Conformity Distribution"}
           </h3>
           <div className="flex-1">
@@ -216,13 +216,13 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
                   data={conformityPieData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={35}
-                  outerRadius={55}
+                  innerRadius={50}
+                  outerRadius={80}
                   paddingAngle={3}
                   dataKey="value"
                   label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
                   labelLine={false}
-                  style={{ fontSize: '10px' }}
+                  style={{ fontSize: '12px' }}
                 >
                   {conformityPieData.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -232,52 +232,40 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex justify-center gap-3 flex-shrink-0">
+          <div className="flex justify-center gap-4 flex-shrink-0 mt-2">
             {conformityPieData.map((entry, index) => (
-              <div key={entry.name} className="flex items-center gap-1 text-[10px]">
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[index] }} />
+              <div key={entry.name} className="flex items-center gap-1.5 text-xs">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index] }} />
                 <span className="text-muted-foreground">{entry.name}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* OSD Summary - Horizontal */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 h-[180px] flex flex-col">
-          <h3 className="text-xs font-semibold text-foreground mb-2 flex-shrink-0">
+        {/* OSD Summary */}
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col">
+          <h3 className="text-sm font-semibold text-foreground mb-3 flex-shrink-0">
             OSD (Over, Short, Damaged)
             {selectedVendor && <span className="text-primary ml-1">- {selectedVendor.name.split(" ")[0]}</span>}
           </h3>
           <div className="flex-1 flex items-center justify-center">
-            <div className="grid grid-cols-3 gap-3 w-full">
+            <div className="grid grid-cols-3 gap-4 w-full">
               {osdData.map((item) => (
                 <div
                   key={item.type}
-                  className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg bg-muted/50"
+                  className="flex flex-col items-center justify-center gap-3 p-4 rounded-lg bg-muted/50"
                 >
-                  <div className={`p-2 rounded-full bg-card ${item.color}`}>
-                    <item.icon className="w-5 h-5" />
+                  <div className={`p-3 rounded-full bg-card ${item.color}`}>
+                    <item.icon className="w-6 h-6" />
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-foreground">{item.count}</p>
-                    <p className="text-[10px] text-muted-foreground">{item.type}</p>
+                    <p className="text-3xl font-bold text-foreground">{item.count}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{item.type}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Vendor Table */}
-      <div className="bg-card rounded-xl shadow-sm border border-border/50 overflow-hidden h-[150px] flex flex-col">
-        <div className="flex-1 overflow-auto">
-          <VendorTable
-            vendors={filteredVendors}
-            type="material"
-            selectedVendorId={selectedVendor?.id}
-            onSelectVendor={setSelectedVendor}
-          />
         </div>
       </div>
     </div>
