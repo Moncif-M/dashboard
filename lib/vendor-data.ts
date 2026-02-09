@@ -41,6 +41,8 @@ export interface PostAwardKPIs {
   changeRequestsMontant: number
   claimsCount: number
   ncrQorCount: number
+  ncrCount: number
+  qorCount: number
   ncrClosureTime: number
   averageScoreClosed: number
   disciplineScores: {
@@ -55,6 +57,7 @@ export interface PostAwardKPIs {
   avenantCount: number
   avenantPercentage: number
   contractsCount: number
+  contractantsCount: number
   reactivityLetters: number
   guaranteeRenewalTime: number
   concessionRequests: number
@@ -126,6 +129,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 125000,
       claimsCount: 2,
       ncrQorCount: 5,
+      ncrCount: 3,
+      qorCount: 2,
       ncrClosureTime: 12,
       averageScoreClosed: 4.2,
       disciplineScores: {
@@ -140,6 +145,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 3,
       avenantPercentage: 8,
       contractsCount: 7,
+      contractantsCount: 45,
       reactivityLetters: 2.5,
       guaranteeRenewalTime: 15,
       concessionRequests: 4,
@@ -189,6 +195,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 185000,
       claimsCount: 4,
       ncrQorCount: 8,
+      ncrCount: 5,
+      qorCount: 3,
       ncrClosureTime: 18,
       averageScoreClosed: 3.8,
       disciplineScores: {
@@ -203,6 +211,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 5,
       avenantPercentage: 12,
       contractsCount: 5,
+      contractantsCount: 32,
       reactivityLetters: 3.8,
       guaranteeRenewalTime: 22,
       concessionRequests: 6,
@@ -252,6 +261,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 320000,
       claimsCount: 7,
       ncrQorCount: 15,
+      ncrCount: 10,
+      qorCount: 5,
       ncrClosureTime: 28,
       averageScoreClosed: 3.2,
       disciplineScores: {
@@ -266,6 +277,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 8,
       avenantPercentage: 22,
       contractsCount: 4,
+      contractantsCount: 28,
       reactivityLetters: 6.5,
       guaranteeRenewalTime: 35,
       concessionRequests: 12,
@@ -315,6 +327,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 65000,
       claimsCount: 1,
       ncrQorCount: 2,
+      ncrCount: 1,
+      qorCount: 1,
       ncrClosureTime: 8,
       averageScoreClosed: 4.7,
       disciplineScores: {
@@ -329,6 +343,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 1,
       avenantPercentage: 3,
       contractsCount: 12,
+      contractantsCount: 68,
       reactivityLetters: 1.5,
       guaranteeRenewalTime: 8,
       concessionRequests: 2,
@@ -378,6 +393,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 145000,
       claimsCount: 3,
       ncrQorCount: 7,
+      ncrCount: 4,
+      qorCount: 3,
       ncrClosureTime: 20,
       averageScoreClosed: 3.6,
       disciplineScores: {
@@ -392,6 +409,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 4,
       avenantPercentage: 15,
       contractsCount: 6,
+      contractantsCount: 38,
       reactivityLetters: 4.2,
       guaranteeRenewalTime: 25,
       concessionRequests: 8,
@@ -441,6 +459,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 95000,
       claimsCount: 2,
       ncrQorCount: 4,
+      ncrCount: 2,
+      qorCount: 2,
       ncrClosureTime: 14,
       averageScoreClosed: 4.4,
       disciplineScores: {
@@ -455,6 +475,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 2,
       avenantPercentage: 6,
       contractsCount: 9,
+      contractantsCount: 52,
       reactivityLetters: 2.8,
       guaranteeRenewalTime: 12,
       concessionRequests: 3,
@@ -504,6 +525,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 420000,
       claimsCount: 9,
       ncrQorCount: 22,
+      ncrCount: 14,
+      qorCount: 8,
       ncrClosureTime: 35,
       averageScoreClosed: 2.8,
       disciplineScores: {
@@ -518,6 +541,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 12,
       avenantPercentage: 35,
       contractsCount: 2,
+      contractantsCount: 18,
       reactivityLetters: 8.5,
       guaranteeRenewalTime: 45,
       concessionRequests: 18,
@@ -567,6 +591,8 @@ export const vendors: VendorWithKPIs[] = [
       changeRequestsMontant: 210000,
       claimsCount: 5,
       ncrQorCount: 10,
+      ncrCount: 6,
+      qorCount: 4,
       ncrClosureTime: 24,
       averageScoreClosed: 3.4,
       disciplineScores: {
@@ -581,6 +607,7 @@ export const vendors: VendorWithKPIs[] = [
       avenantCount: 6,
       avenantPercentage: 18,
       contractsCount: 3,
+      contractantsCount: 22,
       reactivityLetters: 5.2,
       guaranteeRenewalTime: 28,
       concessionRequests: 9,
@@ -619,7 +646,7 @@ export const kpiThresholds = {
   awardingRate: { green: 75, yellow: 55 },
   responsivenesseTechnique: { green: 4, yellow: 7 }, // inverse - lower is better (days)
   responsivenessSignature: { green: 3, yellow: 6 }, // inverse - lower is better (days)
-  
+
   // Post-Award
   averageScoreClosed: { green: 4.0, yellow: 3.2 },
   ncrClosureTime: { green: 15, yellow: 25 }, // inverse
@@ -628,7 +655,7 @@ export const kpiThresholds = {
   avenantPercentage: { green: 10, yellow: 20 }, // inverse
   reactivityLetters: { green: 3, yellow: 5 }, // inverse
   guaranteeRenewalTime: { green: 15, yellow: 30 }, // inverse
-  
+
   // Material Management
   otifScore: { green: 90, yellow: 75 },
   compliancePercent: { green: 90, yellow: 75 },
@@ -663,6 +690,8 @@ export function getAggregatePostAwardKPIs() {
     totalChangeRequestsMontant: vendors.reduce((sum, v) => sum + v.postAward.changeRequestsMontant, 0),
     totalClaims: vendors.reduce((sum, v) => sum + v.postAward.claimsCount, 0),
     totalNcrQor: vendors.reduce((sum, v) => sum + v.postAward.ncrQorCount, 0),
+    totalNcr: vendors.reduce((sum, v) => sum + v.postAward.ncrCount, 0),
+    totalQor: vendors.reduce((sum, v) => sum + v.postAward.qorCount, 0),
     avgNcrClosureTime: Math.round(vendors.reduce((sum, v) => sum + v.postAward.ncrClosureTime, 0) / total),
     avgScoreClosed: (vendors.reduce((sum, v) => sum + v.postAward.averageScoreClosed, 0) / total).toFixed(1),
     avgDisciplineScores: {
@@ -677,6 +706,7 @@ export function getAggregatePostAwardKPIs() {
     totalAvenants: vendors.reduce((sum, v) => sum + v.postAward.avenantCount, 0),
     avgAvenantPercentage: Math.round(vendors.reduce((sum, v) => sum + v.postAward.avenantPercentage, 0) / total),
     totalContracts: vendors.reduce((sum, v) => sum + v.postAward.contractsCount, 0),
+    totalContractants: vendors.reduce((sum, v) => sum + v.postAward.contractantsCount, 0),
     avgReactivityLetters: (vendors.reduce((sum, v) => sum + v.postAward.reactivityLetters, 0) / total).toFixed(1),
     avgGuaranteeRenewalTime: Math.round(vendors.reduce((sum, v) => sum + v.postAward.guaranteeRenewalTime, 0) / total),
     totalConcessionRequests: vendors.reduce((sum, v) => sum + v.postAward.concessionRequests, 0),

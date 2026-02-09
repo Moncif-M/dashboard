@@ -46,7 +46,7 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
 
   const SortHeader = ({ field, children }: { field: string; children: React.ReactNode }) => (
     <th
-      className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider cursor-pointer hover:bg-muted/50 transition-colors"
+      className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider cursor-pointer hover:bg-muted/50 transition-colors bg-muted/30"
       onClick={() => handleSort(field)}
     >
       <div className="flex items-center gap-1">
@@ -71,7 +71,7 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
 
   const sortedVendors = [...vendors].sort((a, b) => {
     if (!sortField || !sortDirection) return 0
-    
+
     const getNestedValue = (obj: VendorWithKPIs, path: string): number | string => {
       const parts = path.split(".")
       let result: unknown = obj
@@ -97,9 +97,9 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
 
   if (type === "pre-award") {
     return (
-      <div className="overflow-x-auto">
+      <div className="overflow-auto max-h-full">
         <table className="w-full">
-          <thead className="bg-muted/30 border-b border-border">
+          <thead className="bg-muted/95 border-b border-border sticky top-0 z-10 backdrop-blur-sm">
             <tr>
               <SortHeader field="name">Vendor</SortHeader>
               <SortHeader field="tiering">Tier</SortHeader>
@@ -108,8 +108,8 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
               <SortHeader field="preAward.hseScore">HSE</SortHeader>
               <SortHeader field="preAward.sustainabilityScore">Sustainability</SortHeader>
               <SortHeader field="preAward.globalRiskLevel">Risk Level</SortHeader>
-              <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Trace</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">{"D&B"}</th>
+              <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Trace</th>
+              <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">{"D&B"}</th>
               <SortHeader field="preAward.responseRate">Response Rate</SortHeader>
               <SortHeader field="preAward.technicalValidationRatio">Tech Validation</SortHeader>
               <SortHeader field="preAward.priceCompetitiveness">Price Comp.</SortHeader>
@@ -118,8 +118,8 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
           </thead>
           <tbody className="divide-y divide-border">
             {sortedVendors.map((vendor) => (
-              <tr 
-                key={vendor.id} 
+              <tr
+                key={vendor.id}
                 className={getRowClassName(vendor.id)}
                 onClick={() => handleRowClick(vendor)}
               >
@@ -205,9 +205,9 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
 
   if (type === "post-award") {
     return (
-      <div className="overflow-x-auto">
+      <div className="overflow-auto max-h-full">
         <table className="w-full">
-          <thead className="bg-muted/30 border-b border-border">
+          <thead className="bg-muted/95 border-b border-border sticky top-0 z-10 backdrop-blur-sm">
             <tr>
               <SortHeader field="name">Vendor</SortHeader>
               <SortHeader field="tiering">Tier</SortHeader>
@@ -226,8 +226,8 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
           </thead>
           <tbody className="divide-y divide-border">
             {sortedVendors.map((vendor) => (
-              <tr 
-                key={vendor.id} 
+              <tr
+                key={vendor.id}
                 className={getRowClassName(vendor.id)}
                 onClick={() => handleRowClick(vendor)}
               >
@@ -305,27 +305,27 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
 
   // Material Management table
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-auto max-h-full">
       <table className="w-full">
-        <thead className="bg-muted/30 border-b border-border">
+        <thead className="bg-muted/95 border-b border-border sticky top-0 z-10 backdrop-blur-sm">
           <tr>
             <SortHeader field="name">Vendor</SortHeader>
             <SortHeader field="tiering">Tier</SortHeader>
             <SortHeader field="materialManagement.otifScore">OTIF Score</SortHeader>
-            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Planned</th>
-            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Actual</th>
+            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Planned</th>
+            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Actual</th>
             <SortHeader field="materialManagement.compliancePercent">Compliance %</SortHeader>
             <SortHeader field="materialManagement.qualityScore">Quality Score</SortHeader>
             <SortHeader field="materialManagement.ncrProcessFlow">NCR Process</SortHeader>
-            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Over</th>
-            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Short</th>
-            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Damaged</th>
+            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Over</th>
+            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Short</th>
+            <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Damaged</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
           {sortedVendors.map((vendor) => (
-            <tr 
-              key={vendor.id} 
+            <tr
+              key={vendor.id}
               className={getRowClassName(vendor.id)}
               onClick={() => handleRowClick(vendor)}
             >
