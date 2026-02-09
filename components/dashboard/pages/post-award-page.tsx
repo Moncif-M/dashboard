@@ -124,8 +124,8 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
 
   // Overview View
   return (
-    <div className="space-y-3">
-      {/* Top KPI Cards */}
+    <div className="h-[calc(100vh-180px)] flex flex-col gap-3">
+      {/* Top KPI Cards - Fixed height */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         <KPICard
           title="Total Change Requests"
@@ -165,15 +165,15 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
         />
       </div>
 
-      {/* Second Row - Gauge and KPIs */}
+      {/* Second Row - Gauge and KPIs - Fixed height */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Avenants Gauge */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 flex flex-col justify-center">
+        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 flex flex-col justify-center h-[160px]">
           <GaugeChart
             value={displayKPIs.avgAvenantPercentage}
             maxValue={50}
             title={selectedVendor ? `Avenant % vs Initial - ${selectedVendor.name}` : "Avg Avenant % vs Initial Contract"}
-            size="md"
+            size="sm"
             suffix="%"
           />
           <p className="text-xs text-center text-muted-foreground mt-2">Target: {"<"}15%</p>
@@ -220,15 +220,15 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
         </div>
       </div>
 
-      {/* Discipline Scores and Avg Score Closed Row - 3/4 and 1/4 split */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+      {/* Discipline Scores and Avg Score Closed Row - Flex-1 to fill remaining space */}
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-3 min-h-0">
         {/* Discipline Scores - 3/4 */}
-        <div className="lg:col-span-3 bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col">
+        <div className="lg:col-span-3 bg-card rounded-xl p-4 shadow-sm border border-border/50 flex flex-col min-h-0">
           <h3 className="text-sm font-semibold text-foreground mb-3 flex-shrink-0">
             Scores by Discipline
             {selectedVendor && <span className="text-primary ml-2">({selectedVendor.name})</span>}
           </h3>
-          <div className="flex-1">
+          <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={disciplineBarData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -253,7 +253,7 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
         </div>
 
         {/* Avg Score Closed - 1/4 */}
-        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col justify-center">
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex flex-col justify-center">
           <div className="text-center">
             <div className="flex justify-center mb-3">
               <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
