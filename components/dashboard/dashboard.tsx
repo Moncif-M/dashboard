@@ -63,6 +63,7 @@ export function Dashboard() {
     activities: [],
     tierings: [],
     regions: [],
+    vendors: [],
   })
 
   const currentNav = navigation.find((n) => n.id === currentPage)
