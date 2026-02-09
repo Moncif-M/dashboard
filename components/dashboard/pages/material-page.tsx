@@ -9,8 +9,7 @@ import {
   ArrowUp,
   ArrowDown,
   Minus,
-  X,
-  User,
+  DollarSign,
 } from "lucide-react"
 import { KPICard } from "../kpi-card"
 import { GaugeChart } from "../gauge-chart"
@@ -33,7 +32,6 @@ import {
   Pie,
   Cell,
 } from "recharts"
-import { Button } from "@/components/ui/button"
 
 interface MaterialPageProps {
   filters: FilterState
@@ -64,6 +62,7 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
         avgCompliancePercent: 0,
         avgQualityScore: 0,
         avgNcrProcessFlow: 0,
+        avgFraisApproche: 0,
         totalPlanned: 0,
         totalActual: 0,
         totalOsd: { over: 0, short: 0, damaged: 0 },
@@ -76,6 +75,7 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
       compliancePercent: acc.compliancePercent + v.materialManagement.compliancePercent,
       qualityScore: acc.qualityScore + v.materialManagement.qualityScore,
       ncrProcessFlow: acc.ncrProcessFlow + v.materialManagement.ncrProcessFlow,
+      fraisApproche: acc.fraisApproche + v.materialManagement.fraisApproche,
       planned: acc.planned + v.materialManagement.plannedVsActual.planned,
       actual: acc.actual + v.materialManagement.plannedVsActual.actual,
       osd: {
@@ -93,6 +93,7 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
       compliancePercent: 0,
       qualityScore: 0,
       ncrProcessFlow: 0,
+      fraisApproche: 0,
       planned: 0,
       actual: 0,
       osd: { over: 0, short: 0, damaged: 0 },
@@ -106,6 +107,7 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
       avgCompliancePercent: Math.round(sum.compliancePercent / count),
       avgQualityScore: Math.round(sum.qualityScore / count),
       avgNcrProcessFlow: Math.round(sum.ncrProcessFlow / count),
+      avgFraisApproche: sum.fraisApproche / count,
       totalPlanned: sum.planned,
       totalActual: sum.actual,
       totalOsd: sum.osd,
@@ -120,6 +122,7 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
       avgCompliancePercent: selectedVendor.materialManagement.compliancePercent,
       avgQualityScore: selectedVendor.materialManagement.qualityScore,
       avgNcrProcessFlow: selectedVendor.materialManagement.ncrProcessFlow,
+      avgFraisApproche: selectedVendor.materialManagement.fraisApproche,
       totalPlanned: selectedVendor.materialManagement.plannedVsActual.planned,
       totalActual: selectedVendor.materialManagement.plannedVsActual.actual,
       totalOsd: selectedVendor.materialManagement.osdData,
@@ -236,7 +239,7 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
       </div>
 
       {/* Bottom Half - Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
         {/* Planned vs Actual Bar Chart */}
         <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col">
           <h3 className="text-sm font-semibold text-foreground mb-3 flex-shrink-0">
@@ -294,6 +297,23 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
                 <span className="text-muted-foreground">{entry.name}</span>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Frais d'Approche */}
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 h-[300px] flex flex-col">
+          <h3 className="text-sm font-semibold text-foreground mb-3 flex-shrink-0">
+            Frais d&apos;Approche
+            {selectedVendor && <span className="text-primary ml-1">- {selectedVendor.name.split(" ")[0]}</span>}
+          </h3>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-4">
+                <DollarSign className="w-12 h-12 text-primary" />
+              </div>
+              <p className="text-5xl font-bold text-foreground">{displayKPIs.avgFraisApproche.toFixed(1)}%</p>
+              <p className="text-sm text-muted-foreground mt-2">Approach Costs</p>
+            </div>
           </div>
         </div>
 

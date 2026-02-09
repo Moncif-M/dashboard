@@ -69,6 +69,7 @@ export interface MaterialManagementKPIs {
   compliancePercent: number
   qualityScore: number
   ncrProcessFlow: number
+  fraisApproche: number
   osdData: { over: number; short: number; damaged: number }
   conformityData: { conformant: number; nonConformant: number; pending: number }
 }
@@ -156,6 +157,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 96,
       qualityScore: 92,
       ncrProcessFlow: 88,
+      fraisApproche: 4.5,
       osdData: { over: 12, short: 5, damaged: 2 },
       conformityData: { conformant: 1120, nonConformant: 25, pending: 5 },
     },
@@ -222,6 +224,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 88,
       qualityScore: 85,
       ncrProcessFlow: 78,
+      fraisApproche: 7.2,
       osdData: { over: 8, short: 15, damaged: 5 },
       conformityData: { conformant: 680, nonConformant: 35, pending: 5 },
     },
@@ -288,6 +291,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 75,
       qualityScore: 70,
       ncrProcessFlow: 62,
+      fraisApproche: 12.8,
       osdData: { over: 25, short: 35, damaged: 12 },
       conformityData: { conformant: 340, nonConformant: 35, pending: 5 },
     },
@@ -354,6 +358,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 99,
       qualityScore: 97,
       ncrProcessFlow: 95,
+      fraisApproche: 2.8,
       osdData: { over: 3, short: 2, damaged: 0 },
       conformityData: { conformant: 1970, nonConformant: 8, pending: 2 },
     },
@@ -420,6 +425,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 84,
       qualityScore: 80,
       ncrProcessFlow: 75,
+      fraisApproche: 8.5,
       osdData: { over: 15, short: 20, damaged: 8 },
       conformityData: { conformant: 540, nonConformant: 32, pending: 8 },
     },
@@ -486,6 +492,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 94,
       qualityScore: 91,
       ncrProcessFlow: 88,
+      fraisApproche: 5.2,
       osdData: { over: 8, short: 10, damaged: 3 },
       conformityData: { conformant: 1380, nonConformant: 35, pending: 5 },
     },
@@ -552,6 +559,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 65,
       qualityScore: 58,
       ncrProcessFlow: 52,
+      fraisApproche: 15.5,
       osdData: { over: 35, short: 48, damaged: 18 },
       conformityData: { conformant: 205, nonConformant: 30, pending: 5 },
     },
@@ -618,6 +626,7 @@ export const vendors: VendorWithKPIs[] = [
       compliancePercent: 78,
       qualityScore: 74,
       ncrProcessFlow: 68,
+      fraisApproche: 9.8,
       osdData: { over: 18, short: 28, damaged: 10 },
       conformityData: { conformant: 315, nonConformant: 30, pending: 5 },
     },
@@ -662,6 +671,7 @@ export const kpiThresholds = {
   compliancePercent: { green: 90, yellow: 75 },
   qualityScore: { green: 85, yellow: 70 },
   ncrProcessFlow: { green: 80, yellow: 65 },
+  fraisApproche: { green: 5, yellow: 10 }, // inverse - lower is better
 }
 
 // Aggregate KPIs for dashboard
@@ -723,6 +733,7 @@ export function getAggregateMaterialKPIs() {
     avgCompliancePercent: Math.round(vendors.reduce((sum, v) => sum + v.materialManagement.compliancePercent, 0) / total),
     avgQualityScore: Math.round(vendors.reduce((sum, v) => sum + v.materialManagement.qualityScore, 0) / total),
     avgNcrProcessFlow: Math.round(vendors.reduce((sum, v) => sum + v.materialManagement.ncrProcessFlow, 0) / total),
+    avgFraisApproche: vendors.reduce((sum, v) => sum + v.materialManagement.fraisApproche, 0) / total,
     totalOsd: {
       over: vendors.reduce((sum, v) => sum + v.materialManagement.osdData.over, 0),
       short: vendors.reduce((sum, v) => sum + v.materialManagement.osdData.short, 0),
