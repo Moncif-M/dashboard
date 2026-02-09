@@ -41,7 +41,7 @@ import { Button } from "@/components/ui/button"
 
 interface PreAwardPageProps {
   filters: FilterState
-  view: "overview" | "performance"
+  view: "overview" | "performance" | "table"
 }
 
 export function PreAwardPage({ filters, view }: PreAwardPageProps) {
@@ -141,6 +141,22 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
       </div>
     )
   )
+
+  // Table View
+  if (view === "table") {
+    return (
+      <div className="bg-card rounded-xl shadow-sm border border-border/50 overflow-hidden flex flex-col" style={{ height: 'calc(100vh - 180px)' }}>
+        <div className="flex-1 overflow-auto">
+          <VendorTable
+            vendors={filteredVendors}
+            type="pre-award"
+            selectedVendorId={selectedVendor?.id}
+            onSelectVendor={setSelectedVendor}
+          />
+        </div>
+      </div>
+    )
+  }
 
   if (view === "overview") {
     return (
