@@ -38,11 +38,12 @@ import { Button } from "@/components/ui/button"
 
 interface MaterialPageProps {
   filters: FilterState
+  view: "overview" | "table"
 }
 
 const COLORS = ["#10b981", "#ef4444", "#f59e0b"]
 
-export function MaterialPage({ filters }: MaterialPageProps) {
+export function MaterialPage({ filters, view }: MaterialPageProps) {
   const [selectedVendor, setSelectedVendor] = useState<VendorWithKPIs | null>(null)
 
   // Filter vendors
@@ -104,6 +105,23 @@ export function MaterialPage({ filters }: MaterialPageProps) {
     ((displayKPIs.totalActual - displayKPIs.totalPlanned) / displayKPIs.totalPlanned) * 100
   )
 
+  // Table View
+  if (view === "table") {
+    return (
+      <div className="bg-card rounded-xl shadow-sm border border-border/50 overflow-hidden flex flex-col" style={{ height: 'calc(100vh - 180px)' }}>
+        <div className="flex-1 overflow-auto">
+          <VendorTable
+            vendors={filteredVendors}
+            type="material"
+            selectedVendorId={selectedVendor?.id}
+            onSelectVendor={setSelectedVendor}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  // Overview View
   return (
     <div className="space-y-2">
       {/* OTIF Gauge and Main KPIs */}
