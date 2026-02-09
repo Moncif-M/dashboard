@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { categories, subCategories, activities, tierings, regions } from "@/lib/vendor-data"
+import { categories, subCategories, activities, tierings, regions, vendors } from "@/lib/vendor-data"
 import { cn } from "@/lib/utils"
 
 export interface FilterState {
@@ -28,6 +28,7 @@ export interface FilterState {
   activities: string[]
   tierings: string[]
   regions: string[]
+  vendors: string[]
 }
 
 interface FilterPanelProps {
@@ -85,6 +86,7 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
       activities: [],
       tierings: [],
       regions: [],
+      vendors: [],
     })
   }
 
@@ -93,7 +95,8 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
     filters.subCategories.length +
     filters.activities.length +
     filters.tierings.length +
-    filters.regions.length
+    filters.regions.length +
+    filters.vendors.length
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -120,6 +123,12 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
         </DialogHeader>
         
         <div className="grid grid-cols-2 gap-x-6 gap-y-5 py-4">
+          <FilterSelect
+            label="Vendor"
+            options={vendors}
+            value={filters.vendors[0] || "all"}
+            onChange={(value) => updateFilter("vendors", value)}
+          />
           <FilterSelect
             label="Category"
             options={categories}
