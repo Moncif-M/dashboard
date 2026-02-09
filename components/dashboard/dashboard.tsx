@@ -19,7 +19,7 @@ import { MaterialPage } from "./pages/material-page"
 import { Button } from "@/components/ui/button"
 
 type PageType = "pre-award" | "post-award" | "material"
-type SubView = "overview" | "performance"
+type SubView = "overview" | "performance" | "table"
 
 const navigation = [
   {
@@ -29,19 +29,26 @@ const navigation = [
     subViews: [
       { id: "overview" as SubView, label: "Overview" },
       { id: "performance" as SubView, label: "Performance" },
+      { id: "table" as SubView, label: "Table" },
     ],
   },
   {
     id: "post-award" as PageType,
     label: "Post-Award",
     icon: Award,
-    subViews: [],
+    subViews: [
+      { id: "overview" as SubView, label: "Overview" },
+      { id: "table" as SubView, label: "Table" },
+    ],
   },
   {
     id: "material" as PageType,
     label: "Material Management",
     icon: Package,
-    subViews: [],
+    subViews: [
+      { id: "overview" as SubView, label: "Overview" },
+      { id: "table" as SubView, label: "Table" },
+    ],
   },
 ]
 
@@ -236,10 +243,10 @@ export function Dashboard() {
               <div>
                 <h1 className="text-lg font-semibold text-foreground">
                   Vendor Dashboard / <span className="text-primary">{currentNav?.label}</span>
-                  {currentPage === "pre-award" && (
+                  {currentNav?.subViews.length > 0 && (
                     <span className="text-muted-foreground">
                       {" "}
-                      / {subView === "overview" ? "Overview" : "Performance"}
+                      / {subView.charAt(0).toUpperCase() + subView.slice(1)}
                     </span>
                   )}
                 </h1>
@@ -255,8 +262,8 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* Sub Navigation Tabs for Pre-Award */}
-          {currentPage === "pre-award" && currentNav?.subViews.length > 0 && (
+          {/* Sub Navigation Tabs */}
+          {currentNav?.subViews.length > 0 && (
             <div className="flex items-center gap-1 px-4 lg:px-6 pb-2">
               {currentNav.subViews.map((sv) => (
                 <button
@@ -278,9 +285,24 @@ export function Dashboard() {
 
         {/* Page Content */}
         <div className="p-4 lg:p-6">
-          {currentPage === "pre-award" && <PreAwardPage filters={filters} view={subView} />}
-          {currentPage === "post-award" && <PostAwardPage filters={filters} />}
-          {currentPage === "material" && <MaterialPage filters={filters} />}
+          {currentPage === "pre-award" && (
+            <PreAwardPage 
+              filters={filters} 
+              view={subView as "overview" | "performance"} 
+            />
+          )}
+          {currentPage === "post-award" && (
+            <PostAwardPage 
+              filters={filters} 
+              view={subView as "overview" | "table"} 
+            />
+          )}
+          {currentPage === "material" && (
+            <MaterialPage 
+              filters={filters} 
+              view={subView as "overview" | "table"} 
+            />
+          )}
         </div>
       </main>
     </div>
