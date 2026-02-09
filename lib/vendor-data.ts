@@ -630,6 +630,7 @@ export const subCategories = [...new Set(vendors.map(v => v.subCategory))]
 export const activities = [...new Set(vendors.map(v => v.activity))]
 export const tierings: ('Tier 1' | 'Tier 2' | 'Tier 3')[] = ['Tier 1', 'Tier 2', 'Tier 3']
 export const regions = [...new Set(vendors.map(v => v.region))]
+export const vendorNames = vendors.map(v => v.name).sort()
 
 // KPI Thresholds for color coding
 export const kpiThresholds = {

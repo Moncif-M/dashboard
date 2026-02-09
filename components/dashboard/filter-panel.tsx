@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { categories, subCategories, activities, tierings, regions, vendors } from "@/lib/vendor-data"
+import { categories, subCategories, activities, tierings, regions, vendorNames } from "@/lib/vendor-data"
 import { cn } from "@/lib/utils"
 
 export interface FilterState {
@@ -125,7 +125,7 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
         <div className="grid grid-cols-2 gap-x-6 gap-y-5 py-4">
           <FilterSelect
             label="Vendor"
-            options={vendors}
+            options={vendorNames}
             value={filters.vendors[0] || "all"}
             onChange={(value) => updateFilter("vendors", value)}
           />
