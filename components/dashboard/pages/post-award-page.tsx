@@ -43,6 +43,7 @@ import { Button } from "@/components/ui/button"
 
 interface PostAwardPageProps {
   filters: FilterState
+  view: "overview" | "table"
 }
 
 const DISCIPLINE_COLORS = {
@@ -57,7 +58,7 @@ function getScoreColor(score: number) {
   return DISCIPLINE_COLORS.red
 }
 
-export function PostAwardPage({ filters }: PostAwardPageProps) {
+export function PostAwardPage({ filters, view }: PostAwardPageProps) {
   const [selectedVendor, setSelectedVendor] = useState<VendorWithKPIs | null>(null)
 
   // Filter vendors
@@ -105,6 +106,25 @@ export function PostAwardPage({ filters }: PostAwardPageProps) {
     { discipline: "Material", score: displayKPIs.avgDisciplineScores.material },
   ]
 
+  // Table View
+  if (view === "table") {
+    return (
+      <div className="space-y-3">
+        <div className="bg-card rounded-xl shadow-sm border border-border/50 overflow-hidden flex flex-col" style={{ height: 'calc(100vh - 250px)' }}>
+          <div className="flex-1 overflow-auto">
+            <VendorTable
+              vendors={filteredVendors}
+              type="post-award"
+              selectedVendorId={selectedVendor?.id}
+              onSelectVendor={setSelectedVendor}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Overview View
   return (
     <div className="space-y-3">
       {/* Top KPI Cards */}
