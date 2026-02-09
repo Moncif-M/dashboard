@@ -296,9 +296,9 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
 
   // Performance View (Pre-Award 2) - Optimized layout with split KPIs
   return (
-    <div className="space-y-3">
+    <div className="h-[calc(100vh-180px)] flex flex-col gap-3">
       {/* KPI Cards - Top Half - Main Performance Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 content-center">
         <KPICard
           title={selectedVendor ? "Response Rate" : "Avg Response Rate"}
           value={`${displayKPIs.avgResponseRate}%`}
@@ -332,7 +332,7 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
       </div>
 
       {/* KPI Cards - Bottom Half - Projects & Packages */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 content-center">
         <KPICard
           title="Projects Ongoing"
           value={displayKPIs.totalProjectsOngoing}
