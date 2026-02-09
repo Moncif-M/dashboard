@@ -46,9 +46,8 @@ const COLORS = ["#10b981", "#ef4444", "#f59e0b"]
 export function MaterialPage({ filters, view }: MaterialPageProps) {
   const [selectedVendor, setSelectedVendor] = useState<VendorWithKPIs | null>(null)
 
-  // Filter vendors
+  // Filter vendorss
   const filteredVendors = allVendors.filter((v) => {
-    if (filters.vendors.length && !filters.vendors.includes(v.name)) return false
     if (filters.categories.length && !filters.categories.includes(v.category)) return false
     if (filters.subCategories.length && !filters.subCategories.includes(v.subCategory)) return false
     if (filters.activities.length && !filters.activities.includes(v.activity)) return false
