@@ -23,7 +23,6 @@ import { VendorTable } from "../vendor-table"
 import {
   type VendorWithKPIs,
   vendors as allVendors,
-  getAggregatePostAwardKPIs,
 } from "@/lib/vendor-data"
 import type { FilterState } from "../filter-panel"
 import {
@@ -72,9 +71,120 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
     return true
   })
 
-  const aggregateKPIs = getAggregatePostAwardKPIs()
+  // Calculate aggregate KPIs from filtered vendors
+  const calculateAggregateKPIs = (vendors: VendorWithKPIs[]) => {
+    if (vendors.length === 0) {
+      return {
+        totalChangeRequests: 0,
+        totalChangeRequestsMontant: 0,
+        totalClaims: 0,
+        totalNcrQor: 0,
+        totalNcr: 0,
+        totalQor: 0,
+        avgNcrClosureTime: 0,
+        avgScoreClosed: 0,
+        totalAvenants: 0,
+        avgAvenantPercentage: 0,
+        totalContracts: 0,
+        totalContractants: 0,
+        avgReactivityLetters: 0,
+        avgGuaranteeRenewalTime: 0,
+        totalConcessionRequests: 0,
+        avgDisciplineScores: {
+          projectControl: 0,
+          engineering: 0,
+          contract: 0,
+          cAndC: 0,
+          pmqc: 0,
+          construction: 0,
+          material: 0,
+        },
+      }
+    }
 
-  // Get KPIs - either from selected vendor or aggregate
+    const sum = vendors.reduce((acc, v) => ({
+      changeRequests: acc.changeRequests + v.postAward.changeRequestsCount,
+      changeRequestsMontant: acc.changeRequestsMontant + v.postAward.changeRequestsMontant,
+      claims: acc.claims + v.postAward.claimsCount,
+      ncrQor: acc.ncrQor + v.postAward.ncrQorCount,
+      ncr: acc.ncr + v.postAward.ncrCount,
+      qor: acc.qor + v.postAward.qorCount,
+      ncrClosureTime: acc.ncrClosureTime + v.postAward.ncrClosureTime,
+      scoreClosed: acc.scoreClosed + v.postAward.averageScoreClosed,
+      avenants: acc.avenants + v.postAward.avenantCount,
+      avenantPercentage: acc.avenantPercentage + v.postAward.avenantPercentage,
+      contracts: acc.contracts + v.postAward.contractsCount,
+      contractants: acc.contractants + v.postAward.contractantsCount,
+      reactivityLetters: acc.reactivityLetters + v.postAward.reactivityLetters,
+      guaranteeRenewalTime: acc.guaranteeRenewalTime + v.postAward.guaranteeRenewalTime,
+      concessionRequests: acc.concessionRequests + v.postAward.concessionRequests,
+      disciplineScores: {
+        projectControl: acc.disciplineScores.projectControl + v.postAward.disciplineScores.projectControl,
+        engineering: acc.disciplineScores.engineering + v.postAward.disciplineScores.engineering,
+        contract: acc.disciplineScores.contract + v.postAward.disciplineScores.contract,
+        cAndC: acc.disciplineScores.cAndC + v.postAward.disciplineScores.cAndC,
+        pmqc: acc.disciplineScores.pmqc + v.postAward.disciplineScores.pmqc,
+        construction: acc.disciplineScores.construction + v.postAward.disciplineScores.construction,
+        material: acc.disciplineScores.material + v.postAward.disciplineScores.material,
+      },
+    }), {
+      changeRequests: 0,
+      changeRequestsMontant: 0,
+      claims: 0,
+      ncrQor: 0,
+      ncr: 0,
+      qor: 0,
+      ncrClosureTime: 0,
+      scoreClosed: 0,
+      avenants: 0,
+      avenantPercentage: 0,
+      contracts: 0,
+      contractants: 0,
+      reactivityLetters: 0,
+      guaranteeRenewalTime: 0,
+      concessionRequests: 0,
+      disciplineScores: {
+        projectControl: 0,
+        engineering: 0,
+        contract: 0,
+        cAndC: 0,
+        pmqc: 0,
+        construction: 0,
+        material: 0,
+      },
+    })
+
+    const count = vendors.length
+
+    return {
+      totalChangeRequests: sum.changeRequests,
+      totalChangeRequestsMontant: sum.changeRequestsMontant,
+      totalClaims: sum.claims,
+      totalNcrQor: sum.ncrQor,
+      totalNcr: sum.ncr,
+      totalQor: sum.qor,
+      avgNcrClosureTime: Math.round(sum.ncrClosureTime / count),
+      avgScoreClosed: Math.round(sum.scoreClosed / count),
+      totalAvenants: sum.avenants,
+      avgAvenantPercentage: Math.round(sum.avenantPercentage / count),
+      totalContracts: sum.contracts,
+      totalContractants: sum.contractants,
+      avgReactivityLetters: Math.round(sum.reactivityLetters / count),
+      avgGuaranteeRenewalTime: Math.round(sum.guaranteeRenewalTime / count),
+      totalConcessionRequests: sum.concessionRequests,
+      avgDisciplineScores: {
+        projectControl: Math.round(sum.disciplineScores.projectControl / count),
+        engineering: Math.round(sum.disciplineScores.engineering / count),
+        contract: Math.round(sum.disciplineScores.contract / count),
+        cAndC: Math.round(sum.disciplineScores.cAndC / count),
+        pmqc: Math.round(sum.disciplineScores.pmqc / count),
+        construction: Math.round(sum.disciplineScores.construction / count),
+        material: Math.round(sum.disciplineScores.material / count),
+      },
+    }
+  }
+
+  // Get KPIs - either from selected vendor or aggregate from filtered vendors
   const displayKPIs = selectedVendor
     ? {
       totalChangeRequests: selectedVendor.postAward.changeRequestsCount,
@@ -94,7 +204,7 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
       totalConcessionRequests: selectedVendor.postAward.concessionRequests,
       avgDisciplineScores: selectedVendor.postAward.disciplineScores,
     }
-    : aggregateKPIs
+    : calculateAggregateKPIs(filteredVendors)
 
   // Discipline scores bar chart data
   const disciplineBarData = [

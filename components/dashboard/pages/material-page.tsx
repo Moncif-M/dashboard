@@ -18,7 +18,6 @@ import { VendorTable } from "../vendor-table"
 import {
   type VendorWithKPIs,
   vendors as allVendors,
-  getAggregateMaterialKPIs,
 } from "@/lib/vendor-data"
 import type { FilterState } from "../filter-panel"
 import {
@@ -57,7 +56,62 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
     return true
   })
 
-  const aggregateKPIs = getAggregateMaterialKPIs()
+  // Calculate aggregate KPIs from filtered vendors
+  const calculateAggregateKPIs = (vendors: VendorWithKPIs[]) => {
+    if (vendors.length === 0) {
+      return {
+        avgOtifScore: 0,
+        avgCompliancePercent: 0,
+        avgQualityScore: 0,
+        avgNcrProcessFlow: 0,
+        totalPlanned: 0,
+        totalActual: 0,
+        totalOsd: { over: 0, short: 0, damaged: 0 },
+        totalConformity: { conformant: 0, nonConformant: 0, pending: 0 },
+      }
+    }
+
+    const sum = vendors.reduce((acc, v) => ({
+      otifScore: acc.otifScore + v.materialManagement.otifScore,
+      compliancePercent: acc.compliancePercent + v.materialManagement.compliancePercent,
+      qualityScore: acc.qualityScore + v.materialManagement.qualityScore,
+      ncrProcessFlow: acc.ncrProcessFlow + v.materialManagement.ncrProcessFlow,
+      planned: acc.planned + v.materialManagement.plannedVsActual.planned,
+      actual: acc.actual + v.materialManagement.plannedVsActual.actual,
+      osd: {
+        over: acc.osd.over + v.materialManagement.osdData.over,
+        short: acc.osd.short + v.materialManagement.osdData.short,
+        damaged: acc.osd.damaged + v.materialManagement.osdData.damaged,
+      },
+      conformity: {
+        conformant: acc.conformity.conformant + v.materialManagement.conformityData.conformant,
+        nonConformant: acc.conformity.nonConformant + v.materialManagement.conformityData.nonConformant,
+        pending: acc.conformity.pending + v.materialManagement.conformityData.pending,
+      },
+    }), {
+      otifScore: 0,
+      compliancePercent: 0,
+      qualityScore: 0,
+      ncrProcessFlow: 0,
+      planned: 0,
+      actual: 0,
+      osd: { over: 0, short: 0, damaged: 0 },
+      conformity: { conformant: 0, nonConformant: 0, pending: 0 },
+    })
+
+    const count = vendors.length
+
+    return {
+      avgOtifScore: Math.round(sum.otifScore / count),
+      avgCompliancePercent: Math.round(sum.compliancePercent / count),
+      avgQualityScore: Math.round(sum.qualityScore / count),
+      avgNcrProcessFlow: Math.round(sum.ncrProcessFlow / count),
+      totalPlanned: sum.planned,
+      totalActual: sum.actual,
+      totalOsd: sum.osd,
+      totalConformity: sum.conformity,
+    }
+  }
 
   // Get display KPIs based on selection
   const displayKPIs = selectedVendor
@@ -71,9 +125,9 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
       totalOsd: selectedVendor.materialManagement.osdData,
       totalConformity: selectedVendor.materialManagement.conformityData,
     }
-    : aggregateKPIs
+    : calculateAggregateKPIs(filteredVendors)
 
-  // Planned vs Actual dataaaaa
+  // Planned vs Actual data
   const plannedVsActualData = selectedVendor
     ? [
       {
