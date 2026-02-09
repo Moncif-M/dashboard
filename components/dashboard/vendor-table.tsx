@@ -213,7 +213,8 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
               <SortHeader field="tiering">Tier</SortHeader>
               <SortHeader field="postAward.changeRequestsCount">Change Req.</SortHeader>
               <SortHeader field="postAward.claimsCount">Claims</SortHeader>
-              <SortHeader field="postAward.ncrQorCount">NCR/QOR</SortHeader>
+              <SortHeader field="postAward.ncrCount">NCR</SortHeader>
+              <SortHeader field="postAward.qorCount">QOR</SortHeader>
               <SortHeader field="postAward.ncrClosureTime">NCR Closure (days)</SortHeader>
               <SortHeader field="postAward.averageScoreClosed">Avg Score</SortHeader>
               <SortHeader field="postAward.avenantCount">Avenants</SortHeader>
@@ -253,7 +254,10 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
                   />
                 </td>
                 <td className="px-3 py-3">
-                  <span className="text-sm font-medium">{vendor.postAward.ncrQorCount}</span>
+                  <span className="text-sm font-medium">{vendor.postAward.ncrCount}</span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className="text-sm font-medium">{vendor.postAward.qorCount}</span>
                 </td>
                 <td className="px-3 py-3">
                   <PerformanceCell
