@@ -73,7 +73,7 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
     }
     : aggregateKPIs
 
-  // Planned vs Actual data
+  // Planned vs Actual dataa
   const plannedVsActualData = selectedVendor
     ? [
       {
