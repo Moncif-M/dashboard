@@ -364,6 +364,7 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
             <SortHeader field="materialManagement.compliancePercent">Compliance %</SortHeader>
             <SortHeader field="materialManagement.qualityScore">Quality Score</SortHeader>
             <SortHeader field="materialManagement.ncrProcessFlow">NCR Process</SortHeader>
+            <SortHeader field="materialManagement.fraisApproche">Frais d&apos;Approche</SortHeader>
             <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Over</th>
             <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Short</th>
             <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Damaged</th>
@@ -416,6 +417,13 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
                 <PerformanceCell
                   value={vendor.materialManagement.ncrProcessFlow}
                   level={getPerformanceLevel(vendor.materialManagement.ncrProcessFlow, kpiThresholds.ncrProcessFlow)}
+                  suffix="%"
+                />
+              </td>
+              <td className="px-3 py-3">
+                <PerformanceCell
+                  value={vendor.materialManagement.fraisApproche}
+                  level={getInversePerformanceLevel(vendor.materialManagement.fraisApproche, kpiThresholds.fraisApproche)}
                   suffix="%"
                 />
               </td>
