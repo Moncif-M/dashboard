@@ -114,89 +114,132 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
               <SortHeader field="preAward.technicalValidationRatio">Tech Validation</SortHeader>
               <SortHeader field="preAward.priceCompetitiveness">Price Comp.</SortHeader>
               <SortHeader field="preAward.awardingRate">Award Rate</SortHeader>
+              <SortHeader field="preAward.successfulAwards">Successful Awards</SortHeader>
+              <SortHeader field="preAward.projectsOngoing">Projects Ongoing</SortHeader>
+              <SortHeader field="preAward.packagesOngoing">Packages Ongoing</SortHeader>
+              <SortHeader field="preAward.responsivenesseTechnique">Tech Response (days)</SortHeader>
+              <SortHeader field="preAward.responsivenessSignature">Contract Sign (days)</SortHeader>
+              <SortHeader field="preAward.jesaScope">JESA Scope %</SortHeader>
+              <SortHeader field="preAward.dependanceJesa">Dependance JESA %</SortHeader>
+              <th className="px-3 py-3 text-left text-xs font-semibold text-muted-foreground uppercase bg-muted/30">Avg CA (M€)</th>
+              <SortHeader field="preAward.productionCapacity">Production Cap.</SortHeader>
+              <SortHeader field="preAward.openCapacity">Open Capacity</SortHeader>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {sortedVendors.map((vendor) => (
-              <tr
-                key={vendor.id}
-                className={getRowClassName(vendor.id)}
-                onClick={() => handleRowClick(vendor)}
-              >
-                <td className="px-3 py-3">
-                  <div>
-                    <p className="font-medium text-foreground">{vendor.name}</p>
-                    <p className="text-xs text-muted-foreground">{vendor.category}</p>
-                  </div>
-                </td>
-                <td className="px-3 py-3">
-                  <span className="px-2 py-1 text-xs rounded-full bg-muted font-medium">{vendor.tiering}</span>
-                </td>
-                <td className="px-3 py-3 text-sm text-muted-foreground">{vendor.region}</td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.ecosystemScore}
-                    level={getPerformanceLevel(vendor.preAward.ecosystemScore, kpiThresholds.ecosystemScore)}
-                    suffix="%"
-                  />
-                </td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.hseScore}
-                    level={getPerformanceLevel(vendor.preAward.hseScore, kpiThresholds.hseScore)}
-                    suffix="%"
-                  />
-                </td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.sustainabilityScore}
-                    level={getPerformanceLevel(vendor.preAward.sustainabilityScore, kpiThresholds.sustainabilityScore)}
-                    suffix="%"
-                  />
-                </td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.globalRiskLevel}
-                    level={getInversePerformanceLevel(vendor.preAward.globalRiskLevel, kpiThresholds.globalRiskLevel)}
-                    suffix="%"
-                  />
-                </td>
-                <td className="px-3 py-3">
-                  <StatusBadge status={vendor.preAward.traceReport.status} size="sm" />
-                </td>
-                <td className="px-3 py-3">
-                  <StatusBadge status={vendor.preAward.dbScore.status} size="sm" />
-                </td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.responseRate}
-                    level={getPerformanceLevel(vendor.preAward.responseRate, kpiThresholds.responseRate)}
-                    suffix="%"
-                  />
-                </td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.technicalValidationRatio}
-                    level={getPerformanceLevel(vendor.preAward.technicalValidationRatio, kpiThresholds.technicalValidationRatio)}
-                    suffix="%"
-                  />
-                </td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.priceCompetitiveness}
-                    level={getPerformanceLevel(vendor.preAward.priceCompetitiveness, kpiThresholds.priceCompetitiveness)}
-                    suffix="%"
-                  />
-                </td>
-                <td className="px-3 py-3">
-                  <PerformanceCell
-                    value={vendor.preAward.awardingRate}
-                    level={getPerformanceLevel(vendor.preAward.awardingRate, kpiThresholds.awardingRate)}
-                    suffix="%"
-                  />
-                </td>
-              </tr>
-            ))}
+            {sortedVendors.map((vendor) => {
+              const avgCA = vendor.preAward.chiffreAffaire.reduce((sum, val) => sum + val, 0) / vendor.preAward.chiffreAffaire.length
+              return (
+                <tr
+                  key={vendor.id}
+                  className={getRowClassName(vendor.id)}
+                  onClick={() => handleRowClick(vendor)}
+                >
+                  <td className="px-3 py-3">
+                    <div>
+                      <p className="font-medium text-foreground">{vendor.name}</p>
+                      <p className="text-xs text-muted-foreground">{vendor.category}</p>
+                    </div>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="px-2 py-1 text-xs rounded-full bg-muted font-medium">{vendor.tiering}</span>
+                  </td>
+                  <td className="px-3 py-3 text-sm text-muted-foreground">{vendor.region}</td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.ecosystemScore}
+                      level={getPerformanceLevel(vendor.preAward.ecosystemScore, kpiThresholds.ecosystemScore)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.hseScore}
+                      level={getPerformanceLevel(vendor.preAward.hseScore, kpiThresholds.hseScore)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.sustainabilityScore}
+                      level={getPerformanceLevel(vendor.preAward.sustainabilityScore, kpiThresholds.sustainabilityScore)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.globalRiskLevel}
+                      level={getInversePerformanceLevel(vendor.preAward.globalRiskLevel, kpiThresholds.globalRiskLevel)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <StatusBadge status={vendor.preAward.traceReport.status} size="sm" />
+                  </td>
+                  <td className="px-3 py-3">
+                    <StatusBadge status={vendor.preAward.dbScore.status} size="sm" />
+                  </td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.responseRate}
+                      level={getPerformanceLevel(vendor.preAward.responseRate, kpiThresholds.responseRate)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.technicalValidationRatio}
+                      level={getPerformanceLevel(vendor.preAward.technicalValidationRatio, kpiThresholds.technicalValidationRatio)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.priceCompetitiveness}
+                      level={getPerformanceLevel(vendor.preAward.priceCompetitiveness, kpiThresholds.priceCompetitiveness)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <PerformanceCell
+                      value={vendor.preAward.awardingRate}
+                      level={getPerformanceLevel(vendor.preAward.awardingRate, kpiThresholds.awardingRate)}
+                      suffix="%"
+                    />
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.successfulAwards}</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.projectsOngoing}</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.packagesOngoing}</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.responsivenesseTechnique}</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.responsivenessSignature}</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.jesaScope}%</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.dependanceJesa}%</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{avgCA.toFixed(1)}</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.productionCapacity.toLocaleString()}</span>
+                  </td>
+                  <td className="px-3 py-3">
+                    <span className="text-sm font-medium">{vendor.preAward.openCapacity.toLocaleString()}</span>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

@@ -22,7 +22,6 @@ import { VendorTable } from "../vendor-table"
 import {
   type VendorWithKPIs,
   vendors as allVendors,
-  getAggregatePreAwardKPIs,
 } from "@/lib/vendor-data"
 import type { FilterState } from "../filter-panel"
 import {
@@ -47,7 +46,7 @@ interface PreAwardPageProps {
 export function PreAwardPage({ filters, view }: PreAwardPageProps) {
   const [selectedVendor, setSelectedVendor] = useState<VendorWithKPIs | null>(null)
 
-  // Filter vendorsss
+  // Filter vendors
   const filteredVendors = allVendors.filter((v) => {
     if (filters.vendors.length && !filters.vendors.includes(v.name)) return false
     if (filters.categories.length && !filters.categories.includes(v.category)) return false
@@ -58,7 +57,90 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
     return true
   })
 
-  const aggregateKPIs = getAggregatePreAwardKPIs()
+  // Calculate aggregate KPIs from filtered vendors
+  const calculateAggregateKPIs = (vendors: VendorWithKPIs[]) => {
+    if (vendors.length === 0) {
+      return {
+        avgEcosystemScore: 0,
+        avgHseScore: 0,
+        avgSustainabilityScore: 0,
+        avgGlobalRiskLevel: 0,
+        totalTraceFlags: 0,
+        totalDbFlags: 0,
+        avgResponseRate: 0,
+        avgTechnicalValidation: 0,
+        avgPriceCompetitiveness: 0,
+        totalSuccessfulAwards: 0,
+        avgAwardingRate: 0,
+        totalProjectsOngoing: 0,
+        totalPackagesOngoing: 0,
+        dependanceJesa: 0,
+        responsivenesseTechnique: 0,
+        responsivenessSignature: 0,
+        jesaScope: 0,
+      }
+    }
+
+    const sum = vendors.reduce((acc, v) => ({
+      ecosystemScore: acc.ecosystemScore + v.preAward.ecosystemScore,
+      hseScore: acc.hseScore + v.preAward.hseScore,
+      sustainabilityScore: acc.sustainabilityScore + v.preAward.sustainabilityScore,
+      globalRiskLevel: acc.globalRiskLevel + v.preAward.globalRiskLevel,
+      traceFlags: acc.traceFlags + (v.preAward.traceReport.status === 'flagged' ? 1 : 0),
+      dbFlags: acc.dbFlags + (v.preAward.dbScore.status === 'flagged' ? 1 : 0),
+      responseRate: acc.responseRate + v.preAward.responseRate,
+      technicalValidation: acc.technicalValidation + v.preAward.technicalValidationRatio,
+      priceCompetitiveness: acc.priceCompetitiveness + v.preAward.priceCompetitiveness,
+      successfulAwards: acc.successfulAwards + v.preAward.successfulAwards,
+      awardingRate: acc.awardingRate + v.preAward.awardingRate,
+      projectsOngoing: acc.projectsOngoing + v.preAward.projectsOngoing,
+      packagesOngoing: acc.packagesOngoing + v.preAward.packagesOngoing,
+      dependanceJesa: acc.dependanceJesa + v.preAward.dependanceJesa,
+      responsivenesseTechnique: acc.responsivenesseTechnique + v.preAward.responsivenesseTechnique,
+      responsivenessSignature: acc.responsivenessSignature + v.preAward.responsivenessSignature,
+      jesaScope: acc.jesaScope + v.preAward.jesaScope,
+    }), {
+      ecosystemScore: 0,
+      hseScore: 0,
+      sustainabilityScore: 0,
+      globalRiskLevel: 0,
+      traceFlags: 0,
+      dbFlags: 0,
+      responseRate: 0,
+      technicalValidation: 0,
+      priceCompetitiveness: 0,
+      successfulAwards: 0,
+      awardingRate: 0,
+      projectsOngoing: 0,
+      packagesOngoing: 0,
+      dependanceJesa: 0,
+      responsivenesseTechnique: 0,
+      responsivenessSignature: 0,
+      jesaScope: 0,
+    })
+
+    const count = vendors.length
+
+    return {
+      avgEcosystemScore: Math.round(sum.ecosystemScore / count),
+      avgHseScore: Math.round(sum.hseScore / count),
+      avgSustainabilityScore: Math.round(sum.sustainabilityScore / count),
+      avgGlobalRiskLevel: Math.round(sum.globalRiskLevel / count),
+      totalTraceFlags: sum.traceFlags,
+      totalDbFlags: sum.dbFlags,
+      avgResponseRate: Math.round(sum.responseRate / count),
+      avgTechnicalValidation: Math.round(sum.technicalValidation / count),
+      avgPriceCompetitiveness: Math.round(sum.priceCompetitiveness / count),
+      totalSuccessfulAwards: sum.successfulAwards,
+      avgAwardingRate: Math.round(sum.awardingRate / count),
+      totalProjectsOngoing: sum.projectsOngoing,
+      totalPackagesOngoing: sum.packagesOngoing,
+      dependanceJesa: Math.round(sum.dependanceJesa / count),
+      responsivenesseTechnique: Number((sum.responsivenesseTechnique / count).toFixed(1)),
+      responsivenessSignature: Number((sum.responsivenessSignature / count).toFixed(1)),
+      jesaScope: Math.round(sum.jesaScope / count),
+    }
+  }
 
   // Get display KPIs based on selection
   const displayKPIs = selectedVendor
@@ -81,13 +163,7 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
       responsivenessSignature: selectedVendor.preAward.responsivenessSignature,
       jesaScope: selectedVendor.preAward.jesaScope,
     }
-    : {
-      ...aggregateKPIs,
-      dependanceJesa: Math.round(filteredVendors.reduce((sum, v) => sum + v.preAward.dependanceJesa, 0) / (filteredVendors.length || 1)),
-      responsivenesseTechnique: Number((filteredVendors.reduce((sum, v) => sum + v.preAward.responsivenesseTechnique, 0) / (filteredVendors.length || 1)).toFixed(1)),
-      responsivenessSignature: Number((filteredVendors.reduce((sum, v) => sum + v.preAward.responsivenessSignature, 0) / (filteredVendors.length || 1)).toFixed(1)),
-      jesaScope: Math.round(filteredVendors.reduce((sum, v) => sum + v.preAward.jesaScope, 0) / (filteredVendors.length || 1)),
-    }
+    : calculateAggregateKPIs(filteredVendors)
 
   // Sample time series data for charts - now includes dependance JESA
   const caTimeData = selectedVendor
