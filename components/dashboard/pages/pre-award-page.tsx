@@ -294,61 +294,65 @@ export function PreAwardPage({ filters, view }: PreAwardPageProps) {
     )
   }
 
-  // Performance View (Pre-Award 2) - Optimized layout with split KPIs
+  // Performance View (Pre-Award 2) - Optimized layout with 3-2-3 KPIs
   return (
-    <div className="h-[calc(100vh-180px)] flex flex-col gap-3">
-      {/* KPI Cards - Top Half - Main Performance Metrics */}
-      <div className="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 content-center">
+    <div className="h-[calc(100vh-180px)] flex flex-col gap-4">
+      {/* Top Row - 3 KPIs */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
         <KPICard
           title={selectedVendor ? "Response Rate" : "Avg Response Rate"}
           value={`${displayKPIs.avgResponseRate}%`}
-          icon={<Target className="w-5 h-5" />}
+          icon={<Target className="w-6 h-6" />}
           variant="green"
         />
         <KPICard
           title="Tech Validation Ratio"
           value={`${displayKPIs.avgTechnicalValidation}%`}
-          icon={<Shield className="w-5 h-5" />}
+          icon={<Shield className="w-6 h-6" />}
           variant="blue"
         />
         <KPICard
           title="Price Competitiveness"
           value={`${displayKPIs.avgPriceCompetitiveness}%`}
-          icon={<TrendingUp className="w-5 h-5" />}
+          icon={<TrendingUp className="w-6 h-6" />}
           variant="yellow"
         />
+      </div>
+
+      {/* Middle Row - 2 KPIs */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
         <KPICard
           title="Successful Awards"
           value={displayKPIs.totalSuccessfulAwards}
-          icon={<Award className="w-5 h-5" />}
+          icon={<Award className="w-6 h-6" />}
           variant="green"
         />
         <KPICard
           title={selectedVendor ? "Awarding Rate" : "Avg Awarding Rate"}
           value={`${displayKPIs.avgAwardingRate}%`}
-          icon={<Percent className="w-5 h-5" />}
+          icon={<Percent className="w-6 h-6" />}
           variant="blue"
         />
       </div>
 
-      {/* KPI Cards - Bottom Half - Projects & Packages */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 content-center">
+      {/* Bottom Row - 3 KPIs */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
         <KPICard
           title="Projects Ongoing"
           value={displayKPIs.totalProjectsOngoing}
-          icon={<FolderKanban className="w-5 h-5" />}
+          icon={<FolderKanban className="w-6 h-6" />}
           variant="green"
         />
         <KPICard
           title="Packages Ongoing"
           value={displayKPIs.totalPackagesOngoing}
-          icon={<Package className="w-5 h-5" />}
+          icon={<Package className="w-6 h-6" />}
           variant="blue"
         />
         <KPICard
           title="JESA Scope %"
           value={`${displayKPIs.jesaScope}%`}
-          icon={<Building2 className="w-5 h-5" />}
+          icon={<Building2 className="w-6 h-6" />}
           variant="blue"
         />
       </div>
