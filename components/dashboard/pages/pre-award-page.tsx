@@ -47,7 +47,7 @@ interface PreAwardPageProps {
 export function PreAwardPage({ filters, view }: PreAwardPageProps) {
   const [selectedVendor, setSelectedVendor] = useState<VendorWithKPIs | null>(null)
 
-  // Filter vendors
+  // Filter vendorsss
   const filteredVendors = allVendors.filter((v) => {
     if (filters.categories.length && !filters.categories.includes(v.category)) return false
     if (filters.subCategories.length && !filters.subCategories.includes(v.subCategory)) return false
