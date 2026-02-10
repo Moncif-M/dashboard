@@ -277,9 +277,9 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
       </div>
 
       {/* Second Row - Gauge and KPIs - Fixed height */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-[160px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Avenants Gauge */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 flex flex-col justify-center">
+        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 flex flex-col justify-center h-[160px]">
           <GaugeChart
             value={displayKPIs.avgAvenantPercentage}
             maxValue={50}
@@ -291,61 +291,43 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
         </div>
 
         {/* KPI Cards on the right - More compact grid */}
-        <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-2 content-center">
-          <div className="bg-card rounded-lg p-2 shadow-sm border border-border/50 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
-              <FileStack className="w-4 h-4 text-yellow-500" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-medium text-muted-foreground truncate">Total Avenants</p>
-              <p className="text-lg font-bold text-foreground">{displayKPIs.totalAvenants}</p>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-2 shadow-sm border border-border/50 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
-              <FileCheck className="w-4 h-4 text-green-500" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-medium text-muted-foreground truncate">Total Contracts</p>
-              <p className="text-lg font-bold text-foreground">{displayKPIs.totalContracts}</p>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-2 shadow-sm border border-border/50 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-              <Users className="w-4 h-4 text-blue-500" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-medium text-muted-foreground truncate">Nb Contractants</p>
-              <p className="text-lg font-bold text-foreground">{displayKPIs.totalContractants}</p>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-2 shadow-sm border border-border/50 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0">
-              <Mail className="w-4 h-4 text-orange-500" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-medium text-muted-foreground truncate">Letter Response</p>
-              <p className="text-lg font-bold text-foreground">{displayKPIs.avgReactivityLetters} days</p>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-2 shadow-sm border border-border/50 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0">
-              <GitPullRequest className="w-4 h-4 text-orange-500" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-medium text-muted-foreground truncate">Concession Requests</p>
-              <p className="text-lg font-bold text-foreground">{displayKPIs.totalConcessionRequests}</p>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-2 shadow-sm border border-border/50 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
-              <Shield className="w-4 h-4 text-yellow-500" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-medium text-muted-foreground truncate">Guarantee Renewal</p>
-              <p className="text-lg font-bold text-foreground">{displayKPIs.avgGuaranteeRenewalTime} days</p>
-            </div>
-          </div>
+        <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-3">
+          <KPICard
+            title="Total Avenants"
+            value={displayKPIs.totalAvenants}
+            icon={<FileStack className="w-5 h-5" />}
+            variant="yellow"
+          />
+          <KPICard
+            title="Total Contracts"
+            value={displayKPIs.totalContracts}
+            icon={<FileCheck className="w-5 h-5" />}
+            variant="green"
+          />
+          <KPICard
+            title="Nb Contractants"
+            value={displayKPIs.totalContractants}
+            icon={<Users className="w-5 h-5" />}
+            variant="blue"
+          />
+          <KPICard
+            title="Letter Response"
+            value={`${displayKPIs.avgReactivityLetters} days`}
+            icon={<Mail className="w-5 h-5" />}
+            variant="orange"
+          />
+          <KPICard
+            title="Concession Requests"
+            value={displayKPIs.totalConcessionRequests}
+            icon={<GitPullRequest className="w-5 h-5" />}
+            variant="orange"
+          />
+          <KPICard
+            title="Guarantee Renewal"
+            value={`${displayKPIs.avgGuaranteeRenewalTime} days`}
+            icon={<Shield className="w-5 h-5" />}
+            variant="yellow"
+          />
         </div>
       </div>
 
