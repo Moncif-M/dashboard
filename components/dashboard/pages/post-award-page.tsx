@@ -341,10 +341,10 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
           </h3>
           <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={disciplineBarData} layout="vertical" margin={{ left: 10 }}>
+              <BarChart data={disciplineBarData} layout="vertical" margin={{ left: 20, right: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11 }} stroke="#9ca3af" />
-                <YAxis type="category" dataKey="discipline" tick={{ fontSize: 10 }} stroke="#9ca3af" width={105} />
+                <YAxis type="category" dataKey="discipline" tick={{ fontSize: 10 }} stroke="#9ca3af" width={120} />
                 <Tooltip
                   formatter={(value: number) => [`${value}%`, "Score"]}
                   labelFormatter={(label) => `${label}`}
