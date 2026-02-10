@@ -332,7 +332,7 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
       </div>
 
       {/* Discipline Scores and Avg Score Closed Row - Fixed height */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 h-[220px]">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 h-[280px]">
         {/* Discipline Scores - 3/4 */}
         <div className="lg:col-span-3 bg-card rounded-xl p-3 shadow-sm border border-border/50 flex flex-col">
           <h3 className="text-sm font-semibold text-foreground mb-2 flex-shrink-0">
