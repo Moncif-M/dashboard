@@ -274,13 +274,13 @@ export function MaterialPage({ filters, view }: MaterialPageProps) {
                   data={conformityPieData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
+                  innerRadius={35}
+                  outerRadius={60}
                   paddingAngle={3}
                   dataKey="value"
                   label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
                   labelLine={false}
-                  style={{ fontSize: '12px' }}
+                  style={{ fontSize: '11px' }}
                 >
                   {conformityPieData.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
