@@ -276,18 +276,18 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
         />
       </div>
 
-      {/* Second Row - Gauge and KPIs - Fixed height */}
+      {/* Second Row - Gauge and KPIs */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        {/* Avenants Gauge */}
-        <div className="bg-card rounded-xl p-3 shadow-sm border border-border/50 flex flex-col justify-center h-[160px]">
+        {/* Avenants Gauge - Matches combined height of KPI cards */}
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex flex-col justify-center">
           <GaugeChart
             value={displayKPIs.avgAvenantPercentage}
             maxValue={50}
             title={selectedVendor ? `Avenant % vs Initial - ${selectedVendor.name}` : "Avg Avenant % vs Initial Contract"}
-            size="sm"
+            size="md"
             suffix="%"
           />
-          <p className="text-xs text-center text-muted-foreground mt-2">Target: {"<"}15%</p>
+          <p className="text-sm text-center text-muted-foreground mt-3">Target: {"<"}15%</p>
         </div>
 
         {/* KPI Cards on the right - More compact grid */}
