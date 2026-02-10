@@ -95,6 +95,13 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
     selectedVendorId === vendorId && "bg-primary/10 hover:bg-primary/15 ring-1 ring-primary/30"
   )
 
+  // Helper function to get discipline score color
+  const getDisciplineScoreColor = (score: number) => {
+    if (score >= 85) return "text-green-600"
+    if (score >= 70) return "text-yellow-600"
+    return "text-red-600"
+  }
+
   if (type === "pre-award") {
     return (
       <div className="overflow-auto max-h-full">
@@ -266,6 +273,13 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
               <SortHeader field="postAward.reactivityLetters">Letter Response (days)</SortHeader>
               <SortHeader field="postAward.guaranteeRenewalTime">Guarantee Renewal</SortHeader>
               <SortHeader field="postAward.concessionRequests">Concessions</SortHeader>
+              <SortHeader field="postAward.disciplineScores.projectControl">Project Control</SortHeader>
+              <SortHeader field="postAward.disciplineScores.engineering">Engineering</SortHeader>
+              <SortHeader field="postAward.disciplineScores.contract">Contract</SortHeader>
+              <SortHeader field="postAward.disciplineScores.cAndC">C&C</SortHeader>
+              <SortHeader field="postAward.disciplineScores.pmqc">PMQC</SortHeader>
+              <SortHeader field="postAward.disciplineScores.construction">Construction</SortHeader>
+              <SortHeader field="postAward.disciplineScores.material">Material</SortHeader>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -341,6 +355,41 @@ export function VendorTable({ vendors, type, selectedVendorId, onSelectVendor }:
                 </td>
                 <td className="px-3 py-3">
                   <span className="text-sm font-medium">{vendor.postAward.concessionRequests}</span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className={cn("text-sm font-semibold", getDisciplineScoreColor(vendor.postAward.disciplineScores.projectControl))}>
+                    {vendor.postAward.disciplineScores.projectControl}
+                  </span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className={cn("text-sm font-semibold", getDisciplineScoreColor(vendor.postAward.disciplineScores.engineering))}>
+                    {vendor.postAward.disciplineScores.engineering}
+                  </span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className={cn("text-sm font-semibold", getDisciplineScoreColor(vendor.postAward.disciplineScores.contract))}>
+                    {vendor.postAward.disciplineScores.contract}
+                  </span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className={cn("text-sm font-semibold", getDisciplineScoreColor(vendor.postAward.disciplineScores.cAndC))}>
+                    {vendor.postAward.disciplineScores.cAndC}
+                  </span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className={cn("text-sm font-semibold", getDisciplineScoreColor(vendor.postAward.disciplineScores.pmqc))}>
+                    {vendor.postAward.disciplineScores.pmqc}
+                  </span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className={cn("text-sm font-semibold", getDisciplineScoreColor(vendor.postAward.disciplineScores.construction))}>
+                    {vendor.postAward.disciplineScores.construction}
+                  </span>
+                </td>
+                <td className="px-3 py-3">
+                  <span className={cn("text-sm font-semibold", getDisciplineScoreColor(vendor.postAward.disciplineScores.material))}>
+                    {vendor.postAward.disciplineScores.material}
+                  </span>
                 </td>
               </tr>
             ))}
