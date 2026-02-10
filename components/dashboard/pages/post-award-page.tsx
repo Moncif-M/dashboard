@@ -341,7 +341,7 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
           </h3>
           <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={disciplineBarData} layout="vertical" barCategoryGap="25%">
+              <BarChart data={disciplineBarData} layout="vertical" barCategoryGap="40%">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11 }} stroke="#9ca3af" />
                 <YAxis type="category" dataKey="discipline" tick={{ fontSize: 10 }} stroke="#9ca3af" width={90} />
@@ -353,7 +353,7 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
                   dataKey="score"
                   radius={[0, 4, 4, 0]}
                   name="Score"
-                  barSize={18}
+                  barSize={14}
                 >
                   {disciplineBarData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={getScoreColor(entry.score)} />
