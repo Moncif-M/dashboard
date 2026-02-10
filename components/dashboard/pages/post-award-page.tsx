@@ -332,7 +332,7 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
       </div>
 
       {/* Discipline Scores and Avg Score Closed Row - Fixed height */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 h-[280px]">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 h-[220px]">
         {/* Discipline Scores - 3/4 */}
         <div className="lg:col-span-3 bg-card rounded-xl p-3 shadow-sm border border-border/50 flex flex-col">
           <h3 className="text-sm font-semibold text-foreground mb-2 flex-shrink-0">
@@ -341,10 +341,10 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
           </h3>
           <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={disciplineBarData} layout="vertical" margin={{ left: 20, right: 20 }}>
+              <BarChart data={disciplineBarData} layout="vertical" barCategoryGap="25%">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11 }} stroke="#9ca3af" />
-                <YAxis type="category" dataKey="discipline" tick={{ fontSize: 10 }} stroke="#9ca3af" width={120} />
+                <YAxis type="category" dataKey="discipline" tick={{ fontSize: 10 }} stroke="#9ca3af" width={90} />
                 <Tooltip
                   formatter={(value: number) => [`${value}%`, "Score"]}
                   labelFormatter={(label) => `${label}`}
@@ -353,6 +353,7 @@ export function PostAwardPage({ filters, view }: PostAwardPageProps) {
                   dataKey="score"
                   radius={[0, 4, 4, 0]}
                   name="Score"
+                  barSize={18}
                 >
                   {disciplineBarData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={getScoreColor(entry.score)} />
